@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "pgk-shedule",
+  "private_key_id": "0a4e4bb8998ca5265bd7073e54760a42c1f3caa3",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQC3R5VGLF5PGC4f\njT+FyF5iH/v3F2Z5ixZGLVwZel6fdnmmIp/qykK47DQNvSl5Ayi3CBAU8ZXqVrdY\nFTM6Nc8iKRL4dSn7fz1Fp2135dMyUei5v0vME2RO235bOpk4Sf26TMSpJgwRnjX2\nx8SbV4ixz9IAzcjGfkXeBHnUHWEBmxWMO688JeabG6Rals3cpQ4Pza0D3/SKFbr/\njPAq4saflSxmHIgMh9k9JO02m7r+A6L156IvS50dpJ3yJ77Jzx8FUwqImULC7apD\n3WJwq61QIHv8ifZjQEz18vGlu9HMM+tNg6dpYGP9lrNg3Po0kKotvD5eEyEsd2Bp\nDG3DHCBvAgMBAAECggEAQhgsetvxPrDHoVU8vTAe6WADa34i1F4WMESXXBDHItaE\n1CbUaMV7/lggBXxcAmnjOu5LbmIY4CNZhwhOKwXQps8NKlCGTU37eK0CSyS0Xwcu\n2B1mZjfwCogZLykYrDXyrEaW/TDdVVUqvM4Z1rNgdk8tumB7sSlEZOZUUOwvWXZH\n3javurienHNctuLKSEHOh3q8pJ4nsPmfy/mfzAE9YBHH/vsK6aeDIX8mg++j1jSj\nL8hNU1Rb7oWBkDd67VGDrZjFYzy7MBNn7/eLGUIxHziwvoRefmo20w+IwCJgBpsq\niwketNYU2hd2IFdGU1lGadcoIyX5DFCWHcPgSY6xIQKBgQD8s+MwYwoRc/xk+AFL\nvhoYeGrTEgyu6UcO5evkC/u523lGcg3KC+km0kpsv6YyrpDSIMrw/EN6ZldKlJlp\nUT33Oqd7mncizW+LUUhvWsaTXgBjdDRYlKE2xT/zcNu0tKH5U8AIZsdEGV7NfNtJ\n+tDU1J+Pmbmz/rPDLEZpiviUBwKBgQC5q8yR+8ndSWp+o/LjSpWLXDsCrewukNOw\nnEoG1rrBGiqV5dAzQrCKEZMIerSLNwdDFRGhtrqWaY6ef4j4dcSCYJP/zEsWF93U\nvAnKwrxTfa9buGTmalUdBavTCMydVKCORu8U0V6izam9CPirR42vOsQOhGslL+ms\nNAV9leOGWQKBgQDbCnZoT8C/ZiElyA8ff1WRVneKI4AY8R3l3Qg+sOButr4FgQFQ\n3EgpnWhjoS/HiKcBbOlcP92hsCoD/JCJyKEEtrPMIRUZdqc0RK2b0DyGKpn9mxFw\nosym9A09z9qxZU1tF9pBrg0Vi0QwrARMuPrhMLhqOd7NFX7uM2eJPqu/awKBgQCu\nk6es15dtltsoKhV1uyozN8xQb6H0Ar7Yf4tnNL2yVV0XRldl61285FtgjKd3go00\nePn0GLEGPkgYJYhvPaRAhniB+t/a7SPqI8f9Ou8CfdnFHvLYZ8CRokR2D/78K5cv\nT+j6pQYbg88GbAoMWiIRUesIT1/DPnKzNNK4y5d8OQKBgQCWJ82RQixJ1ibE7Nf/\nn042zS26Oait/9Qy3F9wtcyw/hvoinS6qD8ajxs13zDuWpqRsioqSGumIsNa5Ekc\nzwGz3ZBfzuMvR2+fFsaHIcqG8S/96oKZciXDmDiVvAftYcX1fUZpZBMqCRXpRq3f\nf/4Jdpp9iunGZFlcjC6+e49xcQ==\n-----END PRIVATE KEY-----\n",
+  "client_email": "account@pgk-shedule.iam.gserviceaccount.com",
+  "client_id": "106897828453047482866",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/account%40pgk-shedule.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

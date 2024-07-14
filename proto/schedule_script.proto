@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+package ru.pgk.schedule_service;
+
+option java_multiple_files = true;
+option java_package = "ru.pgk.schedule_service.lib";
+option java_outer_classname = "ScheduleScriptServiceProto";
+option go_package = "tuzov.sso.v1;ssov1";
+
+import "google/protobuf/timestamp.proto";
+
+service ScheduleScriptService {
+  rpc ParseScheduleGoogleSheet(ScheduleRequest) returns(SchedulesResponse) {}
+}
+
+message SchedulesResponse {
+  repeated ScheduleReply schedules = 1;
+}
+
+message ScheduleRequest {
+  bool next_date = 1;
+  int32 department_id = 2;
+}
+
+message ScheduleReply {
+  google.protobuf.Timestamp date = 1;
+  repeated ScheduleRowReply rows = 2;
+}
+
+message ScheduleRowReply {
+  string group_name = 1;
+  string shift = 2;
+  repeated ScheduleColumnReply columns = 3;
+}
+
+message ScheduleColumnReply {
+  int32 number = 1;
+  string teacher = 2;
+  string cabinet = 3;
+  bool exam = 4;
+}
