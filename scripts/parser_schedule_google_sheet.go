@@ -129,46 +129,15 @@ func (p ParserScheduleGoogleSheet) ParseRow(row []interface{}) *ssov1.ScheduleRo
 
 	for i, column := range row {
 		if i == 0 {
-			groupName = groupNameRegex.FindStringSubmatch(column.(string))[0]
-			shiftMatches := shiftRegex.FindStringSubmatch(column.(string))
-			if len(shiftMatches) > 1 {
-				shift = shiftMatches[1]
-			} else {
-				shift = defaultShift
-			}
+			groupName, shift = p.ParseColumnGroupNameAndShift(column)
 		} else {
-			teacher := ""
-			teacherMatches := teacherRegex.FindStringSubmatch(column.(string))
-			if len(teacherMatches) > 1 {
-				teacher = teacherMatches[1] + " " + teacherMatches[2] + "."
-			}
-
-			cabinet := ""
-			cabinetsMatches := cabinetsRegex.FindAllStringSubmatch(column.(string), -1)
-			if len(cabinetsMatches) > 0 {
-				var formattedCabinets []string
-				for _, match := range cabinetsMatches {
-					formattedCabinets = append(formattedCabinets, fmt.Sprintf("%s/%s, %s/%s", match[1], match[3], match[2], match[3]))
-				}
-				cabinet = strings.Join(formattedCabinets, ", ")
-			} else {
-				cabinetMatches := cabinetRegex.FindStringSubmatch(column.(string))
-				if len(cabinetMatches) > 0 {
-					cabinetMatch := cabinetMatches[0]
-					specialCabinet, ok := specialCabinets[cabinetMatch]
-					if ok {
-						cabinet = specialCabinet
-					} else {
-						cabinet = cabinetMatch
-					}
-				}
-			}
+			teacher, cabinet := p.ParseColumnSubject(column)
 
 			newColumn := &ssov1.ScheduleColumnReply{
 				Number:  int32(i),
 				Teacher: teacher,
 				Cabinet: cabinet,
-				Exam:    false,
+				Exam:    strings.Contains(strings.ToLower(column.(string)), "экзамен"),
 			}
 
 			columns = append(columns, newColumn)
@@ -182,15 +151,59 @@ func (p ParserScheduleGoogleSheet) ParseRow(row []interface{}) *ssov1.ScheduleRo
 	}
 }
 
-func (p ParserScheduleGoogleSheet) GetAllValues(ctx context.Context) ([][]interface{}, error) {
-	b, err := os.ReadFile(CredentialsFileGoogleSheet)
-	if err != nil {
-		return nil, fmt.Errorf("failed to read credentials file: %w", err)
-	}
+func (p ParserScheduleGoogleSheet) ParseColumnSubject(column interface{}) (string, string) {
+	teacher := p.ParseColumnTeacher(column)
+	cabinet := p.ParseColumnCabinet(column)
+	return teacher, cabinet
+}
 
-	srv, err := sheets.NewService(ctx, option.WithCredentialsJSON(b))
+func (p ParserScheduleGoogleSheet) ParseColumnTeacher(column interface{}) string {
+	teacher := ""
+	teacherMatches := teacherRegex.FindStringSubmatch(column.(string))
+	if len(teacherMatches) > 1 {
+		teacher = teacherMatches[1] + " " + teacherMatches[2] + "."
+	}
+	return teacher
+}
+
+func (p ParserScheduleGoogleSheet) ParseColumnCabinet(column interface{}) string {
+	cabinet := ""
+	cabinetsMatches := cabinetsRegex.FindAllStringSubmatch(column.(string), -1)
+	if len(cabinetsMatches) > 0 {
+		var formattedCabinets []string
+		for _, match := range cabinetsMatches {
+			formattedCabinets = append(formattedCabinets, fmt.Sprintf("%s/%s, %s/%s", match[1], match[3], match[2], match[3]))
+		}
+		cabinet = strings.Join(formattedCabinets, ", ")
+	} else {
+		cabinetMatches := cabinetRegex.FindStringSubmatch(column.(string))
+		if len(cabinetMatches) > 0 {
+			cabinetMatch := cabinetMatches[0]
+			specialCabinet, ok := specialCabinets[cabinetMatch]
+			if ok {
+				cabinet = specialCabinet
+			} else {
+				cabinet = cabinetMatch
+			}
+		}
+	}
+	return cabinet
+}
+
+func (p ParserScheduleGoogleSheet) ParseColumnGroupNameAndShift(column interface{}) (string, string) {
+	groupName := groupNameRegex.FindStringSubmatch(column.(string))[0]
+	shiftMatches := shiftRegex.FindStringSubmatch(column.(string))
+	shift := defaultShift
+	if len(shiftMatches) > 1 {
+		shift = shiftMatches[1]
+	}
+	return groupName, shift
+}
+
+func (p ParserScheduleGoogleSheet) GetAllValues(ctx context.Context) ([][]interface{}, error) {
+	srv, err := p.GetGoogleSheetService(ctx)
 	if err != nil {
-		return nil, fmt.Errorf("failed to create Sheets client: %w", err)
+		return nil, err
 	}
 
 	readRange := p.DepartmentSheetName
@@ -204,4 +217,17 @@ func (p ParserScheduleGoogleSheet) GetAllValues(ctx context.Context) ([][]interf
 	}
 
 	return resp.Values, nil
+}
+
+func (p ParserScheduleGoogleSheet) GetGoogleSheetService(ctx context.Context) (*sheets.Service, error) {
+	b, err := os.ReadFile(CredentialsFileGoogleSheet)
+	if err != nil {
+		return nil, fmt.Errorf("failed to read credentials file: %w", err)
+	}
+
+	srv, err := sheets.NewService(ctx, option.WithCredentialsJSON(b))
+	if err != nil {
+		return nil, fmt.Errorf("failed to create Sheets client: %w", err)
+	}
+	return srv, nil
 }
