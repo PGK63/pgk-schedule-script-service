@@ -12,7 +12,7 @@ import (
 
 const (
 	port    = 50053
-	appName = "pgk-schedule-script-service"
+	appName = "script-service"
 )
 
 func main() {
